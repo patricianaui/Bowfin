@@ -61,6 +61,8 @@ Navigate to the **Environment Variables** tab of your Render Web Service dashboa
 
 Click **Save Changes**. Render will automatically boot up your service.
 
+Note: If the `SUBREDDITS` and `KEYWORDS` variables are left blank, the application will automatically fall back to native wholesome animal monitoring defaults (aww, Eyebleach matching cute, wholesome) to verify your system connectivity.
+
 ---
 
 ### 5. Keep Bowfin Awake (Crucial for 24/7 Monitoring)
@@ -73,8 +75,6 @@ Because Render's free tier automatically shuts down apps after 15 minutes of sil
 4. Paste your Render URL into the `URL to monitor` field.
 5. Set the alert frequency to `every 5 minutes`.
 6. Save the monitor. Betterstack will now ping your Flask interface constantly, tricking Render into staying awake 24/7 so your business radar never misses a lead!
-
-Note: If the `SUBREDDITS` and `KEYWORDS` variables are left blank, the application will automatically fall back to native wholesome animal monitoring defaults (aww, Eyebleach matching cute, wholesome) to verify your system connectivity.
 
 ---
 
