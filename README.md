@@ -35,7 +35,7 @@ Deploying Bowfin takes less than 5 minutes and requires absolutely zero code mod
 ### 2. Prepare Your Repository
 
 1. Fork or clone this repository to your personal GitHub account.
-2. Make sure your project directory contains your `bowfin.py`, and `requirements.txt` file.
+2. Make sure your project directory contains your `bowfin.py` and `requirements.txt` file.
 
 ---
    
