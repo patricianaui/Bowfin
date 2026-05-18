@@ -15,9 +15,8 @@ def home():
 TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN")
 TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
 
-SUBREDDITS = ["phcareers", "TechCareersShifting", "pinoyprogrammer", "WorkingStudentsPH"]
-KEYWORDS = ["ccna", "cisco", "network engineer", "certifications", "upskill"]
-
+SUBREDDITS = ["phcareers", "TechCareersShifting", "pinoyprogrammer", "WorkingStudentsPH", "studentsph", "PHJobs", "JobsPhilippines", "CorpoChikaPH"]
+KEYWORDS = ["ccna", "cisco", "cybersecurity", "ethical hacker", "packet tracer", "network engineer", "network security", "linux fundamentals", "network admin", "ccst", "azure", "az-900", "power bi", "data analytics", "data science", "pl-300", "copilot", "generative ai", "ai agents", "databases", "dp-900", "power platform", "photoshop", "illustrator", "premiere pro", "after effects", "indesign", "autodesk", "revit", "fusion 360", "graphic design", "python programming", "javascript", "html/css", "software development", "unity dev", "game programming", "game dev", "project management", "pmi", "digital marketing", "excel expert", "mos cert", "stakeholder engagement", "resume check", "upskill", "career shift", "shifter", "credentials", "certifications"]
 processed_posts = set()
 
 def send_telegram_notification(title, permalink, subreddit):
