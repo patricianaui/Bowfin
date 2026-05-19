@@ -10,27 +10,29 @@ No need to pay hundreds of dollars a month for expensive social listening tools.
 
 ## What's New
 
-**Now supports lead filtering**: Bowfin, through NVIDIA's Llama 3.3 Nemotron Super 49B V1.5 model, automatically scores every lead from **Low** to **High** intent. Stop sorting through casual chatter and instantly filter for users who are ready to buy right now (this is an optional feature that requires extra steps, but nevertheless costs you nothing).
+**Dynamic Context Profile** - You no longer need to manually input keywords. By typing `/setcontext` directly inside your own Bowfin Telegram bot, Bowfin will automatically coordinate with NVIDIA's Llama 3.3 Nemotron Super 49B V1.5 model to engineer 20 high-intent phrase vectors customized specifically for your startup/use-case.
 
-See **Step 6** to configure this optional feature.
+**Now supports lead filtering** - Bowfin, through NVIDIA's model, automatically scores every lead from **Low** to **High** intent. It instantly filters for users who are ready to buy right now.
+
+See **Step 6** to configure this feature.
 
 ---
 
 ## 🧠 How Bowfin Works
 
-Bowfin is engineered to run as an efficient, lightweight background engine:
+Bowfin runs as a smart, two-part automated system that handles everything for you behind the scenes:
 
-1. It automatically reads through the titles and descriptions of Reddit posts, looking for the exact keywords or phrases you want to target.
-2. The moment it finds a match, it instantly formats a clean update and sends it straight to your private Telegram chat.
-3. If it finds multiple matches at once, it pauses for one second between messages. This keeps Telegram happy and ensures your phone's notification system actually rings instead of silencing the alerts as spam.
-4. It uses a dual-channel setup that runs the scanner in the background while keeping a simple heartbeat connection active with your cloud host. This tricks the server into staying awake so your radar never goes offline.
-5. **[OPTIONAL]** If configured with an NVIDIA API key, Bowfin passes the matched post to a specialized, reasoning-capable language model. The AI analyzes the user's wording and grades them from **Low** to **High** intent so you know exactly who is ready to buy.
+1. With the `/setcontext` command, Bowfin updates your business profile targets on the fly without you ever needing to tweak the code.
+2. Once it receives your business description, Bowfin hands it over to NVIDIA's advanced Llama Nemotron LLM. The AI  brainstorms the 20 most common phrases, complaints, or questions a real customer would type on Reddit. No need to craft your own keywords anymore.
+3. Bowfin then patrols your chosen subreddits every 60 seconds and scans all new posts to see if they match your AI-generated keyword set.
+4. When a post catches Bowfin's eye, the AI reads between the lines to analyze the context. It filters out casual chatter and grades the author's buying readiness from **Low** to **High** intent.
+5. High and medium-intent matches are sent straight to your personal Telegram chat within minutes of being posted on Reddit. Low-intent spam is ignored entirely so your phone only buzzes when there's a genuine opportunity waiting.
 
 ---
 
 ## 🛠️ How to Get Bowfin Working
 
-Deploying Bowfin takes less than 5 minutes and requires absolutely zero code modifications once it's up.
+Deploying Bowfin takes less than 10 minutes, costs $0, and requires absolutely zero code modifications once it's up.
 
 ### 1. Prerequisites & Telegram Setup
 
@@ -38,7 +40,7 @@ Deploying Bowfin takes less than 5 minutes and requires absolutely zero code mod
 2. Message `@userinfobot` to get your personal **Chat ID**.
 3. Create a free account on [Render](https://render.com).
 4. Create a free account on [Betterstack](https://betterstack.com).
-5. **[OPTIONAL]** Sign up for a free developer account at [NVIDIA Build](https://build.nvidia.com/) and generate an API key of the `llama-3.3-nemotron-super-49b-v1.5` model (it will begin with `nvapi-`).
+5. Sign up for a free developer account at [NVIDIA Build](https://build.nvidia.com/) and generate an API key of the `llama-3.3-nemotron-super-49b-v1.5` model (it will begin with `nvapi-`).
 
 ---
 
@@ -67,8 +69,8 @@ Navigate to the **Environment Variables** tab of your Render Web Service dashboa
 | **`TOKEN`** | Your unique Telegram Bot Token | `123456789:ABCdefGhIJKlm...` |
 | **`ID`** | Your personal Telegram Chat ID number | `987654321` |
 | **`SUBREDDITS`** | Comma-separated communities (no spaces) | `saas,solofounders,startups` |
-| **`KEYWORDS`** | Comma-separated trigger phrases (no spaces) | `recommendation,looking for,software` |
-| **`NVIDIA_API_KEY`** | *(Optional)* Your NVIDIA Build Developer API Key | `nvapi-qX9DllqVGq8NQe...` |
+| **`KEYWORDS`** | [OPTIONAL] Leave blank or type a single keyword | `software` |
+| **`NVIDIA_API_KEY`** | [OPTIONAL] Your NVIDIA Build Developer API Key | `nvapi-qX9DllqVGq8NQe...` |
 
 Click **Save Changes**. Render will automatically boot up your service.
 
@@ -89,9 +91,9 @@ Because Render's free tier automatically shuts down apps after 15 minutes of sil
 
 ---
 
-### 6. [OPTIONAL] Filter Lead Intent Through NVIDIA's Model
+### 6. Set up NVIDIA's Llama Nemotron Super for API Keys
 
-To filter your leads by purchasing intent:
+To filter your leads by purchasing intent and allow Bowfin to find smart matches for your business/use-case:
 
 1. Get your own API key of the `llama-3.3-nemotron-super-49b-v1.5` model from [NVIDIA Build](https://build.nvidia.com/).
 2. Include another `Environment Variable` on Render, and name it `NVIDIA_API_KEY`. Paste your API key.
@@ -100,7 +102,15 @@ To filter your leads by purchasing intent:
 
 ---
 
-## 💻 Running & Testing Locally (Optional)
+### 7. Entering Your Use-Case for Bowfin
+
+Bowfin works best if you give it context about your business/use-case:
+
+1. Open your own Bowfin on Telegram and type the command `/setcontext` along with your specific context (e.g., `/setcontext I lead a marketing agency, and I'm looking for clients in Metro Manila who are specifically looking for digital marketing agencies.`).
+
+---
+
+## [OPTIONAL] 💻 Running & Testing Locally
 
 If you want to test your configuration on your computer before pushing it live to Render, open your Mac Terminal or Windows Command Prompt inside your project folder and run this single consolidated command:
 
