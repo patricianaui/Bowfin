@@ -53,6 +53,7 @@ Deploying Bowfin takes less than 10 minutes, costs $0, and requires absolutely z
 
 1. Create a new Web Service on Render and connect your forked Bowfin repository.
 2. Select Python as the environment.
+3. Set the Build Command to `pip install -r requirements.txt`.
 3. Set the Start Command to `gunicorn bowfin:app`.
 4. Choose the **Free** tier.
 
