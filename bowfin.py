@@ -215,15 +215,16 @@ def handle_telegram_commands_loop():
         time.sleep(2)
 
 def check_reddit_loop():
-    """Worker 2: Independently monitors Reddit streams at high velocity."""
+    """Worker 2: Monitors Reddit streams smoothly without hitting rate-limit thresholds."""
     print("🚀 Bowfin scanning loop activated...", flush=True)
-    headers = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) BowfinBot/3.0"}
+    headers = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) BowfinBot/3.5"}
     
     while True:
         for sub in SUBREDDITS:
             try:
                 url = f"https://www.reddit.com/r/{sub}/new.json?limit=10"
                 response = requests.get(url, headers=headers)
+                
                 if response.status_code == 200:
                     data = response.json()
                     for post in data["data"]["children"]:
@@ -255,10 +256,18 @@ def check_reddit_loop():
                                 break
                         
                         processed_posts.add(post_id)
+                        
                 elif response.status_code == 429:
-                    print("🛑 Reddit API Rate limit hit. Backing off.", flush=True)
+                    print(f"🛑 Reddit API Rate limit hit on r/{sub}. Backing off for a bit...", flush=True)
+                    time.sleep(10)  # Sleep longer to respect the block window if hit
+                    
             except Exception as e:
                 print(f"⚠️ Reddit worker error tracking r/{sub}: {e}", flush=True)
+            
+            # Pacing window between different subreddits to prevent IP traffic spikes
+            time.sleep(3)
+            
+        # Rest window between complete loop cycles
         time.sleep(60)
 
 # --- START MULTI-THREADED SYSTEM ---
