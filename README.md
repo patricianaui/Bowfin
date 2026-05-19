@@ -85,8 +85,8 @@ Because Render's free tier automatically shuts down apps after 15 minutes of sil
 2. Go to [Betterstack](https://betterstack.com/) and create a free account.
 3. Click `Uptime` -> `Monitors` -> `Create Monitor`.
 4. Paste your Render URL into the `URL to monitor` field.
-5. Set the alert frequency to `every 5 minutes`.
-6. Save the monitor. Betterstack will now ping your Flask interface constantly, tricking Render into staying awake 24/7 so your business radar never misses a lead!
+5. Set the `Check frequency` to `every 5 minutes`.
+6. Click `Create monitor`. Betterstack will now ping your Flask interface constantly, tricking Render into staying awake 24/7 so your business radar never misses a lead!
 
 ---
 
