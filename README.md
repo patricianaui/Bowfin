@@ -111,8 +111,6 @@ NVIDIA_API_KEY="your_nvidia_key" TOKEN="your_telegram_token" ID="your_chat_id" .
 
 ## 📄 License & Intellectual Property
 
-## 📄 License & Intellectual Property
-
 Copyright (c) 2026 bream design lab. All rights reserved.
 Bowfin is a proprietary property of bream design lab.
 
