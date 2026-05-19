@@ -10,11 +10,9 @@ No need to pay hundreds of dollars a month for expensive social listening tools.
 
 ## What's New
 
-**Dynamic Context Profile** - You no longer need to manually input keywords. By typing `/setcontext` directly inside your own Bowfin Telegram bot, Bowfin will automatically coordinate with NVIDIA's Llama 3.3 Nemotron Super 49B V1.5 model to engineer 20 high-intent phrase vectors customized specifically for your startup/use-case.
+**Dynamic Context Profile** - You no longer need to manually input keywords. By typing `/setcontext` directly inside your own Bowfin Telegram bot, Bowfin will automatically coordinate with NVIDIA's Llama 3.3 Nemotron Super 49B V1.5 model to engineer 20 high-intent keywords/phrases customized specifically for your startup/business/use-case.
 
 **Now supports lead filtering** - Bowfin, through NVIDIA's model, automatically scores every lead from **Low** to **High** intent. It instantly filters for users who are ready to buy right now.
-
-See **Step 6** to configure this feature.
 
 ---
 
@@ -70,7 +68,7 @@ Navigate to the **Environment Variables** tab of your Render Web Service dashboa
 | **`ID`** | Your personal Telegram Chat ID number | `987654321` |
 | **`SUBREDDITS`** | Comma-separated communities (no spaces) | `saas,solofounders,startups` |
 | **`KEYWORDS`** | [OPTIONAL] Leave blank or type a single keyword | `software` |
-| **`NVIDIA_API_KEY`** | [OPTIONAL] Your NVIDIA Build Developer API Key | `nvapi-qX9DllqVGq8NQe...` |
+| **`NVIDIA_API_KEY`** | Your NVIDIA Build Developer API Key | `nvapi-qX9DllqVGq8NQe...` |
 
 Click **Save Changes**. Render will automatically boot up your service.
 
