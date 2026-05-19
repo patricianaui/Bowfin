@@ -106,6 +106,7 @@ If you want to test your configuration on your computer before pushing it live t
 
 ```bash
 NVIDIA_API_KEY="your_nvidia_key" TOKEN="your_telegram_token" ID="your_chat_id" .venv/bin/python bowfin.py
+```
 
 ---
 
