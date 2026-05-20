@@ -13,8 +13,8 @@ TELEGRAM_CONFIG = {
     "ID": os.environ.get("ID", "").strip()
 }
 
-# Optimized fallback setups
-SUBREDDITS_STR = os.environ.get("SUBREDDITS", "aww,animalsdoingstuff,Eyebleach")
+# Fallback setups
+SUBREDDITS_STR = os.environ.get("SUBREDDITS", "saas,solofounders,phcareers")
 KEYWORDS_STR = os.environ.get("KEYWORDS", "cute,adorable,aww,sweet")
 
 SUBREDDITS = [s.strip() for s in SUBREDDITS_STR.split(",") if s.strip()]
@@ -43,15 +43,12 @@ last_telegram_update_id = 0
 
 @app.route('/')
 def home():
-    return f"Bowfin is online! Target: '{USER_CONTEXT[:50]}...'"
+    return f"Bowfin is online! Tracking {len(SUBREDDITS)} subreddits. Target: '{USER_CONTEXT[:50]}...'"
 
 # --- AI HELPER GENERATORS ---
 
 def generate_keywords_from_context(context_description):
-    """
-    Leverages Llama 3.3 to analyze profile context and output 20 high-intent phrase vectors.
-    Defensively structured against NoneType payload exceptions.
-    """
+    """Leverages Llama 3.3 to analyze profile context and output 20 high-intent phrase vectors."""
     if not ai_client:
         return []
 
@@ -78,7 +75,6 @@ CRITICAL RULES:
         content = getattr(response.choices[0].message, 'content', None)
         reasoning = getattr(response.choices[0].message, 'reasoning', None) or getattr(response.choices[0].message, 'reasoning_content', None)
         
-        # Coerce output parameters to a reliable text string to avoid NoneType manipulation failures
         raw_output = content or reasoning or ""
         clean_text = str(raw_output).strip()
         
@@ -193,7 +189,7 @@ def handle_telegram_commands_loop():
                                 reply = (
                                     f"🎯 **Context Profile Saved!**\n\n"
                                     f"**Tracking Scope:**\n*\"{USER_CONTEXT}\"*\n\n"
-                                    f"🧠 **AI-Generated Radar Net (Top 20 Phrases):**\n{formatted_keywords}"
+                                    f"🧠 **Generated Keywords: (Top 20 Phrases):**\n{formatted_keywords}"
                                 )
                             else:
                                 reply = "🎯 **Context Saved!**\n\n⚠️ Keyword generation failed. Retaining prior filters."
@@ -215,15 +211,17 @@ def handle_telegram_commands_loop():
         time.sleep(2)
 
 def check_reddit_loop():
-    """Worker 2: Monitors Reddit streams smoothly without hitting rate-limit thresholds."""
-    print("🚀 Bowfin scanning loop activated...", flush=True)
-    headers = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) BowfinBot/3.5"}
+    """Worker 2: Monitors massive subreddit arrays cleanly using adaptive spacing architecture."""
+    print("🚀 Bowfin scaling radar loop online...", flush=True)
+    headers = {"User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1 BowfinSocialTracker/4.0"}
     
     while True:
+        rate_limit_triggered = False
+        
         for sub in SUBREDDITS:
             try:
-                url = f"https://www.reddit.com/r/{sub}/new.json?limit=10"
-                response = requests.get(url, headers=headers)
+                url = f"https://www.reddit.com/r/{sub}/new.json?limit=15"
+                response = requests.get(url, headers=headers, timeout=10)
                 
                 if response.status_code == 200:
                     data = response.json()
@@ -252,23 +250,30 @@ def check_reddit_loop():
                                     f"🔗 [Read Original Thread](https://reddit.com{permalink})"
                                 )
                                 send_telegram_message(alert_text)
-                                time.sleep(1) 
+                                time.sleep(1.5) 
                                 break
                         
                         processed_posts.add(post_id)
                         
                 elif response.status_code == 429:
-                    print(f"🛑 Reddit API Rate limit hit on r/{sub}. Backing off for a bit...", flush=True)
-                    time.sleep(10)  # Sleep longer to respect the block window if hit
+                    print(f"🛑 Reddit API 429 Rate Limit on r/{sub}. Activating macro back-off.", flush=True)
+                    rate_limit_triggered = True
+                    break  # Break out of the current subreddit loop entirely to rest the IP
                     
             except Exception as e:
                 print(f"⚠️ Reddit worker error tracking r/{sub}: {e}", flush=True)
             
-            # Pacing window between different subreddits to prevent IP traffic spikes
-            time.sleep(3)
+            # 4-second breath pattern between subreddits prevents fast-burst detection
+            time.sleep(4)
             
-        # Rest window between complete loop cycles
-        time.sleep(60)
+        if rate_limit_triggered:
+            # If flagged, force the entire thread container to sleep for 3 minutes to drop the block
+            print("⏳ Cool-down active. Sleeping for 180 seconds...", flush=True)
+            time.sleep(180)
+        else:
+            # Safe macro tracking cycle interval (Changed from 60 seconds to 5 minutes)
+            print("💤 Cycle completed smoothly. Sleeping for 300 seconds...", flush=True)
+            time.sleep(300)
 
 # --- START MULTI-THREADED SYSTEM ---
 
