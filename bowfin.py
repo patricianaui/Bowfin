@@ -271,8 +271,8 @@ def check_reddit_loop():
             print("⏳ Cool-down active. Sleeping for 180 seconds...", flush=True)
             time.sleep(180)
         else:
-            # Safe macro tracking cycle interval (Changed from 60 seconds to 5 minutes)
-            print("💤 Cycle completed smoothly. Sleeping for 300 seconds...", flush=True)
+            # Safe macro tracking cycle interval
+            print(f"💤 Cycle completed. Checked {len(subreddits)} subreddits. Found {total_posts_parsed} posts. {matches_found} keyword matches.")
             time.sleep(300)
 
 # --- START MULTI-THREADED SYSTEM ---
