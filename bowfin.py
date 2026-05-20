@@ -68,15 +68,23 @@ CRITICAL BOILERPLATE INSTRUCTIONS:
                 {"role": "system", "content": system_instruction},
                 {"role": "user", "content": f"Target Profile Context: {context_description}"}
             ],
-            temperature=0.3,
-            max_tokens=512
+            temperature=0.1,
+            max_tokens=256 
         )
         
-        content = getattr(response.choices[0].message, 'content', None)
-        reasoning = getattr(response.choices[0].message, 'reasoning', None) or getattr(response.choices[0].message, 'reasoning_content', None)
+        clean_text = ""
+        if hasattr(response.choices[0].message, 'content') and response.choices[0].message.content:
+            clean_text = response.choices[0].message.content.strip()
         
-        raw_output = content or reasoning or ""
-        clean_text = str(raw_output).strip()
+        # Fallback security block to strip out meta-commentary if the API collapses them
+        if "let's" in clean_text.lower() or "here are" in clean_text.lower() or "\n" in clean_text:
+            # Look for lines that look like a comma-separated list
+            lines = [l.strip() for l in clean_text.split("\n") if l.strip()]
+            for line in lines:
+                if "," in line and not line.startswith(("first", "next", "finally", "okay")):
+                    clean_text = line
+                    break
+        # -----------------------------------------------
         
         if clean_text:
             parsed_terms = [t.strip().lower() for t in clean_text.split(",") if t.strip()]
