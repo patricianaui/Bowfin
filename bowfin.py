@@ -14,15 +14,15 @@ TELEGRAM_CONFIG = {
 }
 
 # Fallback setups
-SUBREDDITS_STR = os.environ.get("SUBREDDITS", "saas,solofounders,phcareers")
-KEYWORDS_STR = os.environ.get("KEYWORDS", "cute,adorable,aww,sweet")
+SUBREDDITS_STR = os.environ.get("SUBREDDITS", "aww,animalsdoingstuff,Eyebleach") # Fallback for empty subreddits
+KEYWORDS_STR = os.environ.get("KEYWORDS", "cute,adorable,dog,cat") # Fallback for empty keywords
 
 SUBREDDITS = [s.strip() for s in SUBREDDITS_STR.split(",") if s.strip()]
 KEYWORDS = [k.strip().lower() for k in KEYWORDS_STR.split(",") if k.strip()]
 
 USER_CONTEXT = os.environ.get(
     "BUSINESS_DESCRIPTION", 
-    "An entertainment filter finding cute dogs, cats, and other animals on Reddit."
+    "An entertainment filter finding cute dogs, cats, and other animals on Reddit." # Fallback for empty context
 )
 
 ai_client = None
@@ -52,14 +52,14 @@ def generate_keywords_from_context(context_description):
     if not ai_client:
         return []
 
-    system_instruction = """You are an expert growth hacker and social listening strategist.
-Analyze the provided business/use-case description and generate EXACTLY 20 distinct keywords, phrases, or buyer distress expressions that potential clients/customers would use when posting on Reddit.
+    system_instruction = """You are an elite Social Listening Engineer configuring a real-time database tracker.
+Analyze the provided target preference profile/business description and generate EXACTLY 20 highly effective, ultra-short conversational keywords, root phrases, or industry expressions that align with it.
 
-CRITICAL RULES:
-1. Return ONLY a single line of comma-separated terms (e.g., term one, phrase two, word three).
-2. Do not include numbered lists, explanations, quotes, or formatting prefixes.
-3. Keep terms completely lowercase.
-4. Focus on conversational pain markers or explicit purchasing questions related to the business."""
+CRITICAL BOILERPLATE INSTRUCTIONS:
+1. NEVER generate long sentences, complete thoughts, or marketing headlines (e.g., do not use "struggling to find clients" or "looking for animal content").
+2. Focus strictly on 1-word or 2-word semantic "hooks" that are highly likely to appear naturally in casual, real-world community slang, raw questions, or complaints.
+3. Keep terms completely lowercase and separated ONLY by commas. Do not include numbered lists, explanations, or quotes.
+4. Extract core pain-points, explicit object names, target audience identifiers, or topic markers that serve as logical entry points for the given profile."""
 
     try:
         response = ai_client.chat.completions.create(
