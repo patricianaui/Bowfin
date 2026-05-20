@@ -217,6 +217,8 @@ def check_reddit_loop():
     
     while True:
         rate_limit_triggered = False
+        total_posts_parsed = 0
+        matches_found = 0
         
         for sub in SUBREDDITS:
             try:
@@ -225,7 +227,10 @@ def check_reddit_loop():
                 
                 if response.status_code == 200:
                     data = response.json()
-                    for post in data["data"]["children"]:
+                    posts = data.get("data", {}).get("children", [])
+                    
+                    for post in posts:
+                        total_posts_parsed += 1
                         post_id = post["data"]["id"]
                         
                         if post_id in processed_posts:
@@ -243,6 +248,7 @@ def check_reddit_loop():
                                 if "LOW INTENT" in ai_analysis:
                                     break
                                 
+                                matches_found += 1
                                 alert_text = (
                                     f"🎯 **Match Discovered in r/{sub}!**\n\n"
                                     f"**Title:** {title}\n\n"
@@ -272,7 +278,7 @@ def check_reddit_loop():
             time.sleep(180)
         else:
             # Safe macro tracking cycle interval
-            print(f"💤 Cycle completed. Checked {len(subreddits)} subreddits. Found {total_posts_parsed} posts. {matches_found} keyword matches.")
+            print(f"💤 Cycle completed. Checked {len(SUBREDDITS)} subreddits. Evaluated {total_posts_parsed} posts. Found {matches_found} matches.", flush=True)
             time.sleep(300)
 
 # --- START MULTI-THREADED SYSTEM ---
