@@ -119,7 +119,7 @@ Output Format (Strictly follow this layout, nothing else):
                 {"role": "user", "content": f"Post Title: {title}\nPost Body: {body}"}
             ],
             temperature=0.1,  
-            max_tokens=1024         
+            max_tokens=2048        
         )
         
         content = getattr(response.choices[0].message, 'content', None)
